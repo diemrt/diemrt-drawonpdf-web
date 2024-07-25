@@ -5,6 +5,7 @@ import placeholderReducer, {
   PlaceholderContext,
 } from "./reducers/placeholdersReducer";
 import { GenericPlaceholder } from "./utils";
+import PlaceholdersForm from "./components/PlaceholdersForm";
 
 const App = () => {
   const INITIAL_STATE = {
@@ -43,7 +44,9 @@ const App = () => {
             <Col md={8}>
               <Canvas />
             </Col>
-            <Col md={4}></Col>
+            <Col md={4}>
+              <PlaceholdersForm />
+            </Col>
           </Row>
         </Container>
       </SelectedPlaceholderContext.Provider>
