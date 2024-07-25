@@ -5,6 +5,7 @@ export type Placeholder = {
   height: number;
   fill: string;
   stroke: string;
+  uuid: string;
   name: string;
 };
 
@@ -16,6 +17,7 @@ export const GenericPlaceholder = (uuid: string) => {
     height: 100,
     stroke: "#317cb1",
     fill: "#72a0c17b",
+    uuid: uuid,
     name: `placeholder-${uuid}`,
   };
 };

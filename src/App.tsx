@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
   const INITIAL_STATE = {
-    items: [GenericPlaceholder("1")],
+    items: [GenericPlaceholder(uuidv4())],
   };
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -71,6 +71,7 @@ export const PlaceholdersContext = createContext<
           stroke: string;
           fill: string;
           name:string;
+          uuid: string;
         }[];
       },
       "items",

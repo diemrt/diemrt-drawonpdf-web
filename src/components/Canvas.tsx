@@ -16,6 +16,7 @@ const Canvas = () => {
     useContext(SelectedPlaceholderContext) || {};
 
   const placeholders = watch("items") as Placeholder[];
+  console.log(placeholders);
 
   // MAIN FUNCTION
   const handleImageLoad = () => {
@@ -38,14 +39,14 @@ const Canvas = () => {
                 <Rectangle
                   key={i}
                   shapeProps={placeholder}
-                  isSelected={placeholder.name === selected}
+                  isSelected={placeholder.uuid === selected}
                   onSelect={() => {
-                    if (setSelected) setSelected(placeholder.name);
+                    if (setSelected) setSelected(placeholder.uuid);
                   }}
                   onChange={(newAttrs: Placeholder) => {
                     if (replace && selected) {
                       const updatedFields = placeholders?.map((placeholder) => {
-                        if (placeholder.name === selected) {
+                        if (placeholder.uuid === selected) {
                           return {
                             ...placeholder,
                             x: newAttrs.x,
