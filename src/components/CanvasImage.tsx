@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Image } from "react-konva";
+import { SelectedPlaceholderContext } from "../App";
 
 interface Props {
   src: string;
@@ -7,6 +8,7 @@ interface Props {
 const CanvasImage = ({ src }: Props) => {
   const [image, setImage] = useState<HTMLImageElement | undefined>(undefined);
   const imageRef = useRef<any>(null);
+  const { setSelected } = useContext(SelectedPlaceholderContext) || {};
 
   useEffect(() => {
     const imageElement = new window.Image();
@@ -24,7 +26,17 @@ const CanvasImage = ({ src }: Props) => {
     setImage(imageRef.current);
   };
 
-  return <Image scaleX={0.5} scaleY={0.5} image={image} ref={imageRef} />;
+  return (
+    <Image
+      scaleX={0.5}
+      scaleY={0.5}
+      image={image}
+      ref={imageRef}
+      onClick={() => {
+        if (setSelected) setSelected(null);
+      }}
+    />
+  );
 };
 
 export default CanvasImage;
