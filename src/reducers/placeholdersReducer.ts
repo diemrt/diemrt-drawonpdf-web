@@ -7,6 +7,7 @@ export type Placeholder = {
   width: number;
   height: number;
   fill: string;
+  stroke: string;
 };
 
 export type ACTIONTYPE = {

@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
+import { Button, ButtonGroup, Container } from "react-bootstrap";
 import Canvas from "./components/Canvas";
 import { createContext, useReducer, useState } from "react";
 import placeholderReducer, {
@@ -40,14 +40,10 @@ const App = () => {
             <Button variant="outline-secondary">Avanti</Button>
             <Button variant="outline-danger">Elimina tutto</Button>
           </ButtonGroup>
-          <Row>
-            <Col md={8}>
+          <div className="d-flex flex-wrap gap-5 align-items-start">
               <Canvas />
-            </Col>
-            <Col md={4}>
               <PlaceholdersForm />
-            </Col>
-          </Row>
+          </div>
         </Container>
       </SelectedPlaceholderContext.Provider>
     </PlaceholderContext.Provider>
