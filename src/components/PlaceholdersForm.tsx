@@ -1,24 +1,16 @@
 import { Form, InputGroup } from "react-bootstrap";
-import { useFieldArray, useForm } from "react-hook-form";
-import { PlaceholderContext } from "../reducers/placeholdersReducer";
 import { useContext } from "react";
+import { PlaceholdersContext } from "../App";
+import { useFormContext } from "react-hook-form";
 
 const PlaceholdersForm = () => {
-  const { state } = useContext(PlaceholderContext) || {};
-  const { control, register } = useForm({
-    defaultValues: {
-      placeholders: state?.items,
-    },
-  });
-  const { fields } = useFieldArray({
-    control,
-    name: "placeholders",
-  });
+  const {register} = useFormContext();
+  const { fields } = useContext(PlaceholdersContext) || {};
 
   return (
     <div className="d-flex flex-column gap-3">
       <h6>Placeholders</h6>
-      {fields.map((field, index) => (
+      {fields?.map((field, index) => (
         <InputGroup key={field.id} style={{ width: "fit-content" }}>
           <InputGroup.Text><div
             style={{
@@ -29,7 +21,7 @@ const PlaceholdersForm = () => {
               border: `2px solid ${field.stroke}`,
             }}
           ></div></InputGroup.Text>          
-          <Form.Control {...register(`placeholders.${index}.id`)} />
+          <Form.Control {...register(`items.${index}.id`)} />
           <InputGroup.Text>x: {field.x}</InputGroup.Text>
           <InputGroup.Text>y: {field.y}</InputGroup.Text>
         </InputGroup>

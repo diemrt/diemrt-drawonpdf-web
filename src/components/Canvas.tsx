@@ -2,18 +2,14 @@ import { Layer, Stage } from "react-konva";
 import CanvasImage from "./CanvasImage";
 import { useContext } from "react";
 import Rectangle from "./Rectangle";
-import {
-  Placeholder,
-  PlaceholderContext,
-} from "../reducers/placeholdersReducer";
-import { SelectedPlaceholderContext } from "../App";
+import { PlaceholdersContext, SelectedPlaceholderContext } from "../App";
 import useLoadImageHook from "../hooks/useLoadImageHook";
+import { Placeholder } from "../utils";
 
 const Canvas = () => {
   const {image, imageLoaded} = useLoadImageHook()
 
-  const { state: placheolders, dispatch: placeholdersDispatch } =
-    useContext(PlaceholderContext) || {};
+  const {fields, replace} = useContext(PlaceholdersContext) || {};
   const { selected, setSelected } =
     useContext(SelectedPlaceholderContext) || {};
 
@@ -36,7 +32,7 @@ const Canvas = () => {
             <CanvasImage src="/pdf-image.jpg" />
           </Layer>
           <Layer>
-            {placheolders?.items?.map((rect, i) => {
+            {fields?.map((rect, i) => {
               console.log(rect);
               return (
                 <Rectangle
@@ -47,11 +43,8 @@ const Canvas = () => {
                     if (setSelected) setSelected(rect.id);
                   }}
                   onChange={(newAttrs: Placeholder) => {
-                    if (placeholdersDispatch) {
-                      placeholdersDispatch({
-                        type: "CHANGE_PLACEHOLDER",
-                        payload: newAttrs,
-                      }); // update redux state
+                    if (replace) {
+                      replace(newAttrs); // update placeholder in context
                     }
                   }}
                 />

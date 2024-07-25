@@ -1,6 +1,14 @@
-import { v4 as uuidv4 } from "uuid";
+export type Placeholder = {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  fill: string;
+  stroke: string;
+};
 
-export const GenericPlaceholder = () => {
+export const GenericPlaceholder = (uuid: string) => {
   return {
     x: 10,
     y: 10,
@@ -8,6 +16,6 @@ export const GenericPlaceholder = () => {
     height: 100,
     stroke: "#317cb1",
     fill: "#72a0c17b",
-    id: `placeholder-${uuidv4()}`,
+    id: `placeholder-${uuid}`,
   };
 };

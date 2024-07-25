@@ -1,55 +1,83 @@
 import { Button, ButtonGroup, Container } from "react-bootstrap";
 import Canvas from "./components/Canvas";
-import { createContext, useReducer, useState } from "react";
-import placeholderReducer, {
-  PlaceholderContext,
-} from "./reducers/placeholdersReducer";
+import { createContext, useState } from "react";
 import { GenericPlaceholder } from "./utils";
 import PlaceholdersForm from "./components/PlaceholdersForm";
+import {
+  FormProvider,
+  useFieldArray,
+  UseFieldArrayReturn,
+  useForm,
+} from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
   const INITIAL_STATE = {
-    items: [GenericPlaceholder()],
+    items: [GenericPlaceholder("1")],
   };
-  const [state, dispatch] = useReducer(placeholderReducer, INITIAL_STATE);
   const [selected, setSelected] = useState<string | null>(null);
 
+  const methods = useForm({
+    defaultValues: INITIAL_STATE,
+  });
+  const { control } = methods;
+  const fieldArray = useFieldArray({
+    control,
+    name: "items",
+  });
+  const { append } = fieldArray;
+
   return (
-    <PlaceholderContext.Provider value={{ state, dispatch }}>
-      <SelectedPlaceholderContext.Provider value={{ selected, setSelected }}>
-        <Container className="my-5">
-          <ButtonGroup className="mb-3">
-            <Button
-              variant="outline-primary"
-              onClick={() =>
-                dispatch({
-                  type: "ADD_PLACEHOLDER",
-                  payload: GenericPlaceholder(),
-                })
-              }
-            >
-              Nuovo placeholder
-            </Button>
-            <Button
-              variant="outline-secondary"
-              onClick={() => setSelected(null)}
-            >
-              Deseleziona
-            </Button>
-            <Button variant="outline-secondary">Indietro</Button>
-            <Button variant="outline-secondary">Avanti</Button>
-            <Button variant="outline-danger">Elimina tutto</Button>
-          </ButtonGroup>
-          <div className="d-flex flex-wrap gap-5 align-items-start">
+    <FormProvider {...methods}>
+      <PlaceholdersContext.Provider value={fieldArray}>
+        <SelectedPlaceholderContext.Provider value={{ selected, setSelected }}>
+          <Container className="my-5">
+            <ButtonGroup className="mb-3">
+              <Button
+                variant="outline-primary"
+                onClick={() => append(GenericPlaceholder(uuidv4()))}
+              >
+                Nuovo placeholder
+              </Button>
+              <Button
+                variant="outline-secondary"
+                onClick={() => setSelected(null)}
+              >
+                Deseleziona
+              </Button>
+              <Button variant="outline-secondary">Indietro</Button>
+              <Button variant="outline-secondary">Avanti</Button>
+              <Button variant="outline-danger">Elimina tutto</Button>
+            </ButtonGroup>
+            <div className="d-flex flex-wrap gap-5 align-items-start">
               <Canvas />
               <PlaceholdersForm />
-          </div>
-        </Container>
-      </SelectedPlaceholderContext.Provider>
-    </PlaceholderContext.Provider>
+            </div>
+          </Container>
+        </SelectedPlaceholderContext.Provider>
+      </PlaceholdersContext.Provider>
+    </FormProvider>
   );
 };
 
+export const PlaceholdersContext = createContext<
+  | UseFieldArrayReturn<
+      {
+        items: {
+          x: number;
+          y: number;
+          width: number;
+          height: number;
+          stroke: string;
+          fill: string;
+          id: string;
+        }[];
+      },
+      "items",
+      "id"
+    >
+  | undefined
+>(undefined);
 export const SelectedPlaceholderContext = createContext<
   | {
       selected: string | null;
