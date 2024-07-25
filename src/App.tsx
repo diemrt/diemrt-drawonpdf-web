@@ -49,7 +49,7 @@ const App = () => {
               <Button variant="outline-secondary">Avanti</Button>
               <Button variant="outline-danger">Elimina tutto</Button>
             </ButtonGroup>
-            <div className="d-flex flex-wrap gap-5 align-items-start">
+            <div className="d-flex gap-5 align-items-start">
               <Canvas />
               <PlaceholdersForm />
             </div>
