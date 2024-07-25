@@ -70,7 +70,7 @@ export const PlaceholdersContext = createContext<
           height: number;
           stroke: string;
           fill: string;
-          id: string;
+          name:string;
         }[];
       },
       "items",

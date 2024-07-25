@@ -4,7 +4,7 @@ import { PlaceholdersContext } from "../App";
 import { useFormContext } from "react-hook-form";
 
 const PlaceholdersForm = () => {
-  const {register} = useFormContext();
+  const { register} = useFormContext();
   const { fields } = useContext(PlaceholdersContext) || {};
 
   return (
@@ -21,7 +21,7 @@ const PlaceholdersForm = () => {
               border: `2px solid ${field.stroke}`,
             }}
           ></div></InputGroup.Text>          
-          <Form.Control {...register(`items.${index}.id`)} />
+          <Form.Control {...register(`items.${index}.name`)} />
           <InputGroup.Text>x: {field.x}</InputGroup.Text>
           <InputGroup.Text>y: {field.y}</InputGroup.Text>
         </InputGroup>

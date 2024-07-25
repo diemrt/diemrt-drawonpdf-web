@@ -5,13 +5,17 @@ import Rectangle from "./Rectangle";
 import { PlaceholdersContext, SelectedPlaceholderContext } from "../App";
 import useLoadImageHook from "../hooks/useLoadImageHook";
 import { Placeholder } from "../utils";
+import { useFormContext } from "react-hook-form";
 
 const Canvas = () => {
-  const {image, imageLoaded} = useLoadImageHook()
+  const { image, imageLoaded } = useLoadImageHook();
 
-  const {fields, replace} = useContext(PlaceholdersContext) || {};
+  const { watch } = useFormContext();
+  const { replace } = useContext(PlaceholdersContext) || {};
   const { selected, setSelected } =
     useContext(SelectedPlaceholderContext) || {};
+
+  const placeholders = watch("items") as Placeholder[];
 
   // MAIN FUNCTION
   const handleImageLoad = () => {
@@ -24,27 +28,35 @@ const Canvas = () => {
         className="border border-3 rounded p-4"
         style={{ width: "fit-content" }}
       >
-        <Stage
-          height={canvasHeight}
-          width={canvasWidth}
-        >
+        <Stage height={canvasHeight} width={canvasWidth}>
           <Layer className="border border-success">
             <CanvasImage src="/pdf-image.jpg" />
           </Layer>
           <Layer>
-            {fields?.map((rect, i) => {
-              console.log(rect);
+            {placeholders?.map((placeholder, i) => {
               return (
                 <Rectangle
                   key={i}
-                  shapeProps={rect}
-                  isSelected={rect.id === selected}
+                  shapeProps={placeholder}
+                  isSelected={placeholder.name === selected}
                   onSelect={() => {
-                    if (setSelected) setSelected(rect.id);
+                    if (setSelected) setSelected(placeholder.name);
                   }}
                   onChange={(newAttrs: Placeholder) => {
-                    if (replace) {
-                      replace(newAttrs); // update placeholder in context
+                    if (replace && selected) {
+                      const updatedFields = placeholders?.map((placeholder) => {
+                        if (placeholder.name === selected) {
+                          return {
+                            ...placeholder,
+                            x: newAttrs.x,
+                            y: newAttrs.y,
+                            width: newAttrs.width,
+                            height: newAttrs.height,
+                          };
+                        }
+                        return placeholder;
+                      });
+                      replace(updatedFields); // update placeholders in context
                     }
                   }}
                 />
