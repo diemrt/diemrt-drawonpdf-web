@@ -1,44 +1,21 @@
 import { Layer, Stage } from "react-konva";
 import CanvasImage from "./CanvasImage";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import Rectangle from "./Rectangle";
 import {
   Placeholder,
   PlaceholderContext,
 } from "../reducers/placeholdersReducer";
+import { SelectedPlaceholderContext } from "../App";
+import useLoadImageHook from "../hooks/useLoadImageHook";
 
 const Canvas = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
-  
-  const {state: placheolders, dispatch: placeholdersDispatch} = useContext(PlaceholderContext) || {};
-  const [selectedId, selectShape] = useState<string | null>(null);
+  const {image, imageLoaded} = useLoadImageHook()
 
-  useEffect(() => {
-    // load image
-    const loadImage = async () => {
-      const img = new Image();
-      img.src = "/pdf-image.jpg";
-      await new Promise((resolve) => {
-        // on image load, set image and imageLoaded state
-        img.onload = () => {
-          setImage(img);
-          setImageLoaded(true);
-          resolve(img);
-        };
-      });
-    };
-
-    loadImage();
-  }, []);
-
-  // deselect active shape when clicked on empty area
-  const checkDeselect = (e: any) => {
-    const clickedOnEmpty = e.target === e.target.getStage();
-    if (clickedOnEmpty) {
-      selectShape(null);
-    }
-  };
+  const { state: placheolders, dispatch: placeholdersDispatch } =
+    useContext(PlaceholderContext) || {};
+  const { selected, setSelected } =
+    useContext(SelectedPlaceholderContext) || {};
 
   // MAIN FUNCTION
   const handleImageLoad = () => {
@@ -54,8 +31,6 @@ const Canvas = () => {
         <Stage
           height={canvasHeight}
           width={canvasWidth}
-          onMouseDown={checkDeselect} // deselect active shape when clicked on empty area
-          onTouchStart={checkDeselect} // deselect active shape when clicked on empty area
         >
           <Layer className="border border-success">
             <CanvasImage src="/pdf-image.jpg" />
@@ -67,13 +42,16 @@ const Canvas = () => {
                 <Rectangle
                   key={i}
                   shapeProps={rect}
-                  isSelected={rect.id === selectedId}
+                  isSelected={rect.id === selected}
                   onSelect={() => {
-                    selectShape(rect.id);
+                    if (setSelected) setSelected(rect.id);
                   }}
                   onChange={(newAttrs: Placeholder) => {
                     if (placeholdersDispatch) {
-                        placeholdersDispatch({ type: "CHANGE_PLACEHOLDER", payload: newAttrs }); // update redux state
+                      placeholdersDispatch({
+                        type: "CHANGE_PLACEHOLDER",
+                        payload: newAttrs,
+                      }); // update redux state
                     }
                   }}
                 />
