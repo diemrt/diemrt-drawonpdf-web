@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Image } from "react-konva";
-import { SelectedPlaceholderContext } from "../App";
+import { SelectedPlaceholderContext } from "../utils";
 
 interface Props {
   src: string;

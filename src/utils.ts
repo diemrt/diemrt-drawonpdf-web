@@ -1,3 +1,5 @@
+import { createContext } from "react";
+import { UseFieldArrayReturn } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 export type Placeholder = {
   x: number;
@@ -34,3 +36,37 @@ export const GenericPlaceholder = (uuid: string) => {
 export const INITIAL_STATE = {
   items: [GenericPlaceholder(uuidv4())],
 };
+
+/**
+ * The context for the placeholders field array.
+ */
+export const PlaceholdersContext = createContext<
+  | UseFieldArrayReturn<
+      {
+        items: {
+          x: number;
+          y: number;
+          width: number;
+          height: number;
+          stroke: string;
+          fill: string;
+          name: string;
+          uuid: string;
+        }[];
+      },
+      "items",
+      "id"
+    >
+  | undefined
+>(undefined);
+
+/**
+ * The context for the selected placeholder.
+ */
+export const SelectedPlaceholderContext = createContext<
+  | {
+      selected: string | null;
+      setSelected: React.Dispatch<React.SetStateAction<string | null>>;
+    }
+  | undefined
+>(undefined);

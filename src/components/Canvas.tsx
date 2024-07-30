@@ -2,9 +2,8 @@ import { Layer, Stage } from "react-konva";
 import CanvasImage from "./CanvasImage";
 import { useContext } from "react";
 import Rectangle from "./Rectangle";
-import { PlaceholdersContext, SelectedPlaceholderContext } from "../App";
 import useLoadImageHook from "../hooks/useLoadImageHook";
-import { Placeholder } from "../utils";
+import { Placeholder, PlaceholdersContext, SelectedPlaceholderContext } from "../utils";
 import { useFormContext } from "react-hook-form";
 
 const Canvas = () => {

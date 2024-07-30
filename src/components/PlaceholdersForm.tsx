@@ -1,7 +1,7 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useContext } from "react";
-import { PlaceholdersContext, SelectedPlaceholderContext } from "../App";
 import { Controller, useFormContext } from "react-hook-form";
+import { PlaceholdersContext, SelectedPlaceholderContext } from "../utils";
 
 const PlaceholdersForm = () => {
   const { control, watch } = useFormContext();
