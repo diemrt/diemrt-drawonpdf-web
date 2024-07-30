@@ -28,6 +28,7 @@ const Canvas = () => {
         className="border border-3 rounded p-4"
         style={{ width: "fit-content" }}
       >
+        <p>Dimensioni: {image!.width}px X {image!.height}px</p>
         <Stage height={canvasHeight} width={canvasWidth}>
           <Layer className="border border-success">
             <CanvasImage src="/pdf-image.jpg" />
