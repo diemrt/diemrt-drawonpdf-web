@@ -1,3 +1,4 @@
+
 import { Fragment, useEffect, useRef } from "react";
 import { Rect, Transformer } from "react-konva";
 
@@ -7,6 +8,17 @@ interface Props {
   onSelect: any;
   onChange: any;
 }
+
+/**
+ * Represents a rectangle component.
+ *
+ * @component
+ * @param {boolean} isSelected - Indicates whether the rectangle is selected.
+ * @param {any} shapeProps - The properties of the rectangle shape.
+ * @param {Function} onSelect - The function to call when the rectangle is selected.
+ * @param {Function} onChange - The function to call when the rectangle is changed.
+ * @returns {JSX.Element} The rectangle component.
+ */
 const Rectangle = ({ isSelected, onChange, onSelect, shapeProps }: Props) => {
   const shapeRef = useRef<any>();
   const trRef = useRef<any>();
