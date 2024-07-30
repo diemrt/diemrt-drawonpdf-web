@@ -16,7 +16,6 @@ const Canvas = () => {
     useContext(SelectedPlaceholderContext) || {};
 
   const placeholders = watch("items") as Placeholder[];
-  console.log(placeholders);
 
   // MAIN FUNCTION
   const handleImageLoad = () => {

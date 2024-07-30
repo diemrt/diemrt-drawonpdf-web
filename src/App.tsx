@@ -45,8 +45,6 @@ const App = () => {
               >
                 Deseleziona
               </Button>
-              <Button variant="outline-secondary">Indietro</Button>
-              <Button variant="outline-secondary">Avanti</Button>
               <Button variant="outline-danger" onClick={() => remove()}>
                 Elimina tutto
               </Button>
