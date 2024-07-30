@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Custom hook for loading an image asynchronously.
+ * @returns An object containing the loaded image and a boolean indicating whether the image has been loaded.
+ */
 const useLoadImageHook = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
