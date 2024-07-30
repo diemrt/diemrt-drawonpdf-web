@@ -11,6 +11,7 @@ const PlaceholdersForm = () => {
   return (
     <div className="d-flex flex-column gap-3 w-100">
       <h6>Placeholders</h6>
+      {fields?.length === 0 && <p className="text-secondary fst-italic">Nessun placeholder</p>}
       {fields?.map((field, index) => (
         <div
           className={`card p-4 d-flex flex-column gap-2 ${

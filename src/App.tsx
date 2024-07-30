@@ -25,7 +25,7 @@ const App = () => {
     control,
     name: "items",
   });
-  const { append } = fieldArray;
+  const { append, remove } = fieldArray;
 
   return (
     <FormProvider {...methods}>
@@ -47,7 +47,9 @@ const App = () => {
               </Button>
               <Button variant="outline-secondary">Indietro</Button>
               <Button variant="outline-secondary">Avanti</Button>
-              <Button variant="outline-danger">Elimina tutto</Button>
+              <Button variant="outline-danger" onClick={() => remove()}>
+                Elimina tutto
+              </Button>
             </ButtonGroup>
             <div className="d-flex gap-5 align-items-start">
               <Canvas />
@@ -70,7 +72,7 @@ export const PlaceholdersContext = createContext<
           height: number;
           stroke: string;
           fill: string;
-          name:string;
+          name: string;
           uuid: string;
         }[];
       },
