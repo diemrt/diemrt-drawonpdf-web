@@ -4,7 +4,7 @@ import { PlaceholdersContext, SelectedPlaceholderContext } from "../App";
 import { Controller, useFormContext } from "react-hook-form";
 
 const PlaceholdersForm = () => {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext();
   const { fields, remove } = useContext(PlaceholdersContext) || {};
   const { selected } = useContext(SelectedPlaceholderContext) || {};
 
@@ -59,7 +59,7 @@ const PlaceholdersForm = () => {
               </Button>
             </InputGroup.Text>
           </InputGroup>
-          <pre>{JSON.stringify(field, undefined, 2)}</pre>
+          <pre>{JSON.stringify(watch(`items.${index}`), undefined, 2)}</pre>
         </div>
       ))}
     </div>
