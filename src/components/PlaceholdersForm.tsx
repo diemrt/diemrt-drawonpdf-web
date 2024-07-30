@@ -59,7 +59,19 @@ const PlaceholdersForm = () => {
               </Button>
             </InputGroup.Text>
           </InputGroup>
-          <pre>{JSON.stringify(watch(`items.${index}`), undefined, 2)}</pre>
+          <pre>
+            {JSON.stringify(
+              {
+                ...watch(`items.${index}`),
+                x: watch(`items.${index}`).x * 2,
+                y: watch(`items.${index}`).y * 2,
+                width: watch(`items.${index}`).width * 2,
+                height: watch(`items.${index}`).height * 2,
+              },
+              undefined,
+              2
+            )}
+          </pre>
         </div>
       ))}
     </div>
