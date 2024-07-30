@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 export type Placeholder = {
   x: number;
   y: number;
@@ -9,6 +10,11 @@ export type Placeholder = {
   name: string;
 };
 
+/**
+ * Creates a generic placeholder object with specified properties.
+ * @param uuid - The unique identifier for the placeholder.
+ * @returns The generic placeholder object.
+ */
 export const GenericPlaceholder = (uuid: string) => {
   return {
     x: 10,
@@ -20,4 +26,11 @@ export const GenericPlaceholder = (uuid: string) => {
     uuid: uuid,
     name: `placeholder-${uuid}`,
   };
+};
+
+/**
+ * The initial state for the placeholders.
+ */
+export const INITIAL_STATE = {
+  items: [GenericPlaceholder(uuidv4())],
 };

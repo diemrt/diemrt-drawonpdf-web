@@ -5,26 +5,18 @@ import { GenericPlaceholder } from "./utils";
 import PlaceholdersForm from "./components/PlaceholdersForm";
 import {
   FormProvider,
-  useFieldArray,
   UseFieldArrayReturn,
-  useForm,
 } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import useFormHelperHook from "./hooks/useFormHelperHook";
+import useFieldArrayHelperHook from "./hooks/useFieldArrayHelperHook";
 
 const App = () => {
-  const INITIAL_STATE = {
-    items: [GenericPlaceholder(uuidv4())],
-  };
   const [selected, setSelected] = useState<string | null>(null);
 
-  const methods = useForm({
-    defaultValues: INITIAL_STATE,
-  });
+  const methods = useFormHelperHook();
   const { control } = methods;
-  const fieldArray = useFieldArray({
-    control,
-    name: "items",
-  });
+  const fieldArray = useFieldArrayHelperHook(control, "items");
   const { append, remove } = fieldArray;
 
   return (
